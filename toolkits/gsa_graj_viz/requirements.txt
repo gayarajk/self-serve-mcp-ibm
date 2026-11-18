@@ -1,0 +1,8 @@
+fastmcp>=4.2.0
+httpx>=0.28.1
+python-dotenv>=1.2.4
+pg8000>=1.31.6
+uvicorn>=0.29.0
+# pg8000 uses Python's built-in ssl — no extra SSL package needed.
+# uvicorn is required for the HTTP (streamable-http) transport in Code Engine.
+# fastmcp pulls in starlette; no need to pin it explicitly.

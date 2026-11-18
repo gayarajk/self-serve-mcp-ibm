@@ -1,0 +1,6 @@
+requests>=2.34.2
+openpyxl>=3.1.5
+pg8000>=1.31.6
+# Standalone tools (tools/) run in the system Python environment, not the
+# Docker container. These match the versions resolved in python:3.12-slim.
+# pg8000 uses Python's built-in ssl module — no extra SSL package needed.

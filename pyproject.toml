@@ -1,0 +1,15 @@
+[project]
+name = "wxo-agentic-workflow"
+version = "0.1.0"
+description = "IBM watsonx Orchestrate Agentic Workflow"
+
+[dependency-groups]
+dev = [
+    "openai>=1.0",
+    "mcp>=1.0",
+    "arize-phoenix>=4.0",
+    "arize-phoenix-client>=2.0",
+    "pg8000>=1.30",
+    "httpx>=0.27",
+    "python-dotenv>=1.0",
+]

@@ -1,0 +1,13 @@
+spec_version: v1
+kind: mcp
+name: gsa_graj_tools
+description: >
+  General-purpose toolkit: weather, jokes, unit conversion, and PostgreSQL database
+  tools (connect_sl_db, read_from_sl, write_to_sl, aggregate_operational_tbl).
+  Database credentials are read from environment variables PG_HOST, PG_PORT,
+  PG_DB, PG_USER, PG_PASS.
+url: https://gsa-graj-tools.2h721savdmhn.ca-tor.codeengine.appdomain.cloud/mcp
+# Database: Neon PostgreSQL (neondb) — ep-weathered-mountain-bc6svyf6-pooler.c-16.us-east-1.aws.neon.tech
+transport: streamable_http
+tools:
+  - "*"

@@ -1,0 +1,14 @@
+spec_version: v1
+kind: mcp
+name: gsa_graj_viz
+description: >
+  Read-only visualization toolkit: discovers PostgreSQL schemas, validates and
+  executes SELECT queries, and returns interactive HTML charts (bar, line,
+  scatter, histogram, heatmap, table) plus CSV exports.
+  Credentials are read from environment variables (DATABASE_URL or PG_*).
+  Results are capped at VIZ_ROW_LIMIT rows; queries time out after
+  VIZ_QUERY_TIMEOUT_MS milliseconds.
+url: https://gsa-graj-viz.2h721savdmhn.ca-tor.codeengine.appdomain.cloud/mcp
+transport: streamable_http
+tools:
+  - "*"

@@ -1,0 +1,3 @@
+requests>=2.34.2
+# Top-level toolkits/ shim. The actual toolkit requirements are in:
+#   toolkits/gsa_graj_tools/requirements.txt

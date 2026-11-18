@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gsa_graj_agent — Web Chat</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+      background: #f7f8fa;
+      min-height: 100vh;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #1f2328;
+      color: #fff;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      z-index: 100;
+    }
+    #root {
+      margin-top: 56px;
+      height: calc(100vh - 56px);
+    }
+  </style>
+</head>
+<body>
+  <header>gsa_graj_agent — Web Chat</header>
+  <div id="root"></div>
+
+  <script>
+    window.wxOConfiguration = {
+      orchestrationID: "0c3f4bcec59c4f58bee5153580e07e96_4303637b-dfb5-4e34-ac7f-b2d23f901260",
+      hostURL: "https://ca-tor.watson-orchestrate.cloud.ibm.com",
+      rootElementID: "root",
+      showLauncher: true,
+      crn: "crn:v1:bluemix:public:watsonx-orchestrate:ca-tor:a/0c3f4bcec59c4f58bee5153580e07e96:4303637b-dfb5-4e34-ac7f-b2d23f901260::",
+      deploymentPlatform: "ibmcloud",
+      chatOptions: {
+        agentId: "5a673057-2846-4b57-a12b-6b5b194a4e81",
+        fileUpload: {
+          enabled: true,
+          allowedFileTypes: [".xlsx", ".xls", ".csv", ".pdf", ".txt", ".json"]
+        }
+      }
+    };
+
+    setTimeout(function () {
+      const script = document.createElement('script');
+      script.src = `${window.wxOConfiguration.hostURL}/wxochat/wxoLoader.js?embed=true`;
+      script.addEventListener('load', function () {
+        wxoLoader.init();
+      });
+      document.head.appendChild(script);
+    }, 0);
+  </script>
+</body>
+</html>

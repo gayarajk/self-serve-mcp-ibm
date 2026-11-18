@@ -1,0 +1,22 @@
+{
+  "name": "gsa_graj_tools",
+  "version": "1.0.0",
+  "description": "GSA MCP hackathon — hospital analytics toolkit. Provides weather, unit conversion, programming jokes, and PostgreSQL read/write/aggregate tools over the wxodb Neon database (operational_tbl, 2022–2026 paediatric admissions).",
+  "transport": "streamable-http",
+  "url": "https://gsa-graj-tools.2h721savdmhn.ca-tor.codeengine.appdomain.cloud/mcp",
+  "health": "https://gsa-graj-tools.2h721savdmhn.ca-tor.codeengine.appdomain.cloud/health",
+  "tools": [
+    "gsa_graj_connect_sl_db",
+    "gsa_graj_read_from_sl",
+    "gsa_graj_write_to_sl",
+    "gsa_graj_aggregate_operational_tbl",
+    "gsa_graj_count_records",
+    "gsa_graj_current_weather",
+    "gsa_graj_programming_joke",
+    "gsa_graj_unit_converter"
+  ],
+  "source": "https://github.com/GSA-TTS/mcp-hackathon-template",
+  "runtime": "python:3.12",
+  "deploy": "ibm-code-engine",
+  "registry": "ca.icr.io/gsa-graj-wxo/gsa-graj-tools:latest"
+}

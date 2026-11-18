@@ -1,0 +1,20 @@
+datasets:
+  - name: gsa-graj-eval-0
+    description: >
+      Evaluation dataset for the gsa_graj_agent covering multi-tool-call scenarios:
+      database schema inspection, filtered reads, single-column aggregates (SUM/AVG/MIN/MAX/COUNT_DISTINCT),
+      grouped aggregates, and unit conversion. All questions are read-only, stable, and require
+      at least two tool calls to answer correctly. Built against operational_tbl (hospital admissions, 2022–2026).
+    csv: datasets/gsa-graj-eval-0/examples/gsa-graj-eval-0.csv
+    columns:
+      input: input
+      expected_output: expected_output
+      tags: tags
+    tags:
+      - schema
+      - read
+      - filter
+      - aggregate
+      - count
+      - unit_conversion
+      - multi_tool

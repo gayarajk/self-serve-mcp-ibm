@@ -6,11 +6,103 @@ style: react_core
 hide_reasoning: false
 memory_enabled: false
 description: |
-  GSA GRAJ agent — live weather, programming jokes, unit conversion, and
-  full PostgreSQL analytics on operational_tbl: data slices with multi-column
-  filters, aggregations (COUNT/SUM/AVG/MIN/MAX/COUNT_DISTINCT), multi-column
-  GROUP BY, date-period grouping (day/month/quarter/year), HAVING filters,
-  ranking, pagination, and CSV-ready results.
+  GSA GRAJ — Self-Serve Data Processing Agent
+
+  A conversational AI agent that transforms plain-English questions into live
+  PostgreSQL analytics, with zero SQL knowledge required. Designed for federal
+  agency program managers and analysts who need on-demand insights from
+  operational hospital data without routing requests through a data engineering
+  team.
+
+  HOW IT WORKS — NATURAL LANGUAGE PROCESSING
+  The agent interprets natural-language requests and automatically selects the
+  right tool, constructs the correct parameters, executes the query against the
+  live wxodb PostgreSQL database, and returns grounded, tool-sourced results.
+  It never guesses, fabricates data, or answers from memory — every response
+  traces directly to a live tool call.
+
+  Examples of natural-language questions it handles:
+    "Which city has the highest total treatment cost?"
+    "Show monthly admissions trend for 2024."
+    "What percentage of patients were discharged vs. transferred?"
+    "Show me records for patients older than 60 admitted in Boston in 2025."
+    "Load this Excel file into the database, replacing any existing rows."
+    "Show 10 rows from operational_tbl but redact all personally identifiable data."
+
+  TOOLS AND WHAT THEY DO
+
+  1. gsa_graj_connect_sl_db
+     Connects to the wxodb PostgreSQL database and returns a full schema
+     snapshot — table names, column names, data types, and row counts.
+     Use this when: "What tables exist?", "Show me the columns", "What is
+     the schema?"
+
+  2. gsa_graj_read_from_sl
+     Executes a SELECT query on any table with an optional WHERE clause and
+     row LIMIT. Returns all columns as JSON rows.
+     Use this when: "Show me the first 20 rows where discharge_status = ICU",
+     "List patients in Toronto", "Give me a sample of the data."
+
+  3. gsa_graj_write_to_sl
+     Inserts a single row (provided as a JSON object) into any table.
+     Use this when: "Add this record to operational_tbl."
+
+  4. gsa_graj_aggregate_operational_tbl
+     Computes SUM, AVG, MIN, MAX, and COUNT across ALL numeric columns for a
+     specific month and year in a single call. Best for monthly summaries.
+     Use this when: "Summarise January 2024", "Show me all stats for March 2023."
+     NOTE: Requires a specific month + year. Not suitable for yearly trends.
+
+  5. gsa_graj_count_records
+     Runs a single aggregate function (COUNT, SUM, AVG, MIN, MAX, or
+     COUNT_DISTINCT) on one column, with an optional WHERE clause and a single
+     GROUP BY column.
+     Use this when: "How many records are there?", "Total cost by city",
+     "Average age by ward", "Count by discharge status."
+
+  6. gsa_graj_query_operational_tbl
+     The most powerful analytics tool. Supports multi-column GROUP BY, HAVING
+     filters, date-period grouping (day/week/month/quarter/year), explicit
+     column selection, pagination, top-N ranking, and NULL checks — all in a
+     single call.
+     Use this when: "Admissions per year", "Top 5 cities by total cost",
+     "Wards with more than 100 records and avg cost above $5,000",
+     "Monthly trend for 2024", "Break down cost by quarter."
+
+  7. gsa_graj_load_excel_to_postgres
+     Accepts an Excel (.xlsx) file attached directly in the chat window
+     (WXOFile), reads it in-memory via openpyxl, auto-creates the target
+     PostgreSQL table with TEXT columns if it does not exist, and bulk-inserts
+     all data rows. Supports append mode (add rows) and replace mode (clear
+     then reload).
+     Use this when: "Load this spreadsheet into the database",
+     "Import my Excel file into a new table called uploaded_patients."
+
+  8. gsa_graj_viz_redact_pii
+     Scans query results for personally identifiable information at two levels:
+     (a) column-name matching against 20+ known PII field names (name, email,
+     dob, ssn, patient_id, attending_doctor, salary, national_id, etc.) and
+     (b) cell-value regex scanning for email addresses, phone numbers, SSNs,
+     credit card numbers, IP addresses, ISO dates, and postcodes. Replaces all
+     detected values with ***REDACTED***.
+     Use this ALWAYS before displaying any row-level patient or staff data.
+
+  9. gsa_graj_current_weather
+     Fetches live weather for any city via wttr.in. No authentication needed.
+
+  10. gsa_graj_programming_joke
+      Returns a random programming joke via icanhazdadjoke.com.
+
+  11. gsa_graj_unit_converter
+      Converts between common measurement units: km↔miles, kg↔lbs, °C↔°F,
+      litres↔gallons, metres↔feet, cm↔inches.
+
+  DATA MODEL — operational_tbl (~605 synthetic hospital admissions)
+  Columns: patient_id · name · gender · dob · age_at_admission · city ·
+  blood_group · date_admitted · health_issue · ward · attending_doctor ·
+  discharge_date · length_of_stay_days · discharge_status · treatment_cost_usd
+  Numeric: age_at_admission · length_of_stay_days · treatment_cost_usd
+  Date: dob · date_admitted · discharge_date
 instructions: |
   You are a database assistant connected to a live PostgreSQL database (wxodb).
   You MUST call the appropriate tool for EVERY request.

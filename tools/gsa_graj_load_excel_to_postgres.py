@@ -16,6 +16,11 @@ Credentials are read from environment variables via db_config.get_conn().
 from io import BytesIO
 from typing import Optional
 
+from dotenv import load_dotenv
+
+# Load .env BEFORE importing db_config — db_config reads env vars at module level.
+load_dotenv()
+
 from ibm_watsonx_orchestrate.agent_builder.tools import tool, WXOFile
 from db_config import get_conn, PG_DB, PG_HOST
 

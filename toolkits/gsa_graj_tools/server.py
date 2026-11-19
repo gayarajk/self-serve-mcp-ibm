@@ -29,9 +29,10 @@ from dotenv import load_dotenv
 from fastmcp import FastMCP
 from pydantic import Field
 
-from db_config import get_conn as _get_conn, PG_DB as _PG_DB, PG_HOST as _PG_HOST
-
+# Load .env BEFORE importing db_config — db_config reads env vars at module level.
 load_dotenv()
+
+from db_config import get_conn as _get_conn, PG_DB as _PG_DB, PG_HOST as _PG_HOST
 
 # All server-side logging MUST go to stderr — stdout is the MCP protocol channel.
 print("gsa_graj_tools MCP server starting (PostgreSQL backend)", file=sys.stderr)

@@ -43,6 +43,9 @@ from dotenv import load_dotenv
 from fastmcp import FastMCP
 from pydantic import Field
 
+# Load .env BEFORE importing db_config — db_config reads env vars at module level.
+load_dotenv()
+
 from db_config import (
     ALLOWED_SCHEMAS,
     PG_DB,
@@ -51,8 +54,6 @@ from db_config import (
     _assert_safe_sql,
     get_ro_conn,
 )
-
-load_dotenv()
 
 print("gsa_graj_viz MCP server starting", file=sys.stderr)
 

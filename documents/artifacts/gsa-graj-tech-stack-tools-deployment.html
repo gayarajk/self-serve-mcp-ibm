@@ -1,0 +1,439 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GSA GRAJ — Tech Stack, Tools &amp; Deployment</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;font-size:13px;line-height:1.6;background:#fff;color:#1f2328;padding:32px 24px 56px;max-width:960px;margin:0 auto}
+  h1{font-size:22px;font-weight:700;margin-bottom:4px}
+  .sub{color:#57606a;font-size:13px;margin-bottom:32px}
+  h2{font-size:15px;font-weight:700;margin:32px 0 12px;padding-bottom:6px;border-bottom:2px solid #e5e7eb}
+  h3{font-size:13px;font-weight:700;margin:16px 0 6px;color:#1f2328}
+
+  /* pill tags */
+  .pill{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;margin:2px 2px 2px 0}
+  .p-blue  {background:#dbeafe;color:#1d4ed8}
+  .p-green {background:#dcfce7;color:#15803d}
+  .p-purple{background:#ede9fe;color:#6d28d9}
+  .p-orange{background:#ffedd5;color:#c2410c}
+  .p-red   {background:#fee2e2;color:#b91c1c}
+  .p-gray  {background:#f3f4f6;color:#374151}
+  .p-yellow{background:#fefce8;color:#a16207}
+
+  /* cards */
+  .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:4px}
+  .card-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .card{background:#f7f8fa;border:1.5px solid #e5e7eb;border-radius:8px;padding:14px 16px}
+  .card-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#57606a;margin-bottom:6px}
+  .card-name{font-size:14px;font-weight:700;margin-bottom:8px}
+
+  /* tool table */
+  table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:4px}
+  thead tr{background:#f7f8fa}
+  th{text-align:left;padding:7px 10px;font-weight:700;border-bottom:2px solid #e5e7eb;color:#374151}
+  td{padding:6px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .tool-name{font-family:ui-monospace,"Cascadia Code",monospace;font-size:11px;color:#1f2328;font-weight:600}
+  .r{color:#15803d;font-weight:700}   /* read */
+  .w{color:#b45309;font-weight:700}   /* write */
+  .u{color:#0369a1;font-weight:700}   /* utility */
+  .s{color:#7c3aed;font-weight:700}   /* security/pii */
+  .e{color:#c2410c;font-weight:700}   /* eval */
+
+  /* code blocks */
+  pre{background:#f7f8fa;border:1px solid #e5e7eb;border-radius:6px;padding:12px 14px;font-family:ui-monospace,"Cascadia Code",monospace;font-size:11.5px;line-height:1.6;overflow-x:auto;margin:8px 0 14px}
+  code{font-family:ui-monospace,"Cascadia Code",monospace;font-size:11.5px;background:#f0f0f0;padding:1px 4px;border-radius:3px}
+
+  /* step list */
+  ol.steps{padding-left:20px}
+  ol.steps li{margin:7px 0;font-size:12.5px}
+  ol.steps li strong{color:#1f2328}
+
+  /* sample questions */
+  .q-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:8px}
+  .q-item{background:#f7f8fa;border:1px solid #e5e7eb;border-radius:6px;padding:10px 13px}
+  .q-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+  .q-text{font-size:12.5px;color:#1f2328;font-style:italic}
+
+  /* env table */
+  .env-table{width:100%;border-collapse:collapse;font-size:12px}
+  .env-table th{text-align:left;padding:6px 10px;background:#f7f8fa;border-bottom:2px solid #e5e7eb;font-weight:700}
+  .env-table td{padding:5px 10px;border-bottom:1px solid #f0f0f0;font-family:ui-monospace,"Cascadia Code",monospace;font-size:11px}
+  .env-table td.desc{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;font-size:12px}
+  .env-table tr:last-child td{border-bottom:none}
+
+  /* dep list */
+  .dep-row{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+
+  footer{text-align:center;font-size:12px;color:#9ca3af;border-top:1px solid #e5e7eb;padding-top:16px;margin-top:48px}
+</style>
+</head>
+<body>
+
+<h1>GSA GRAJ — Tech Stack, Tools &amp; Deployment</h1>
+<p class="sub">IBM watsonx Orchestrate · 3 Agents · 2 MCP Toolkits (FastMCP) · 5 Standalone Tools · Neon PostgreSQL · IBM Code Engine · Python 3.12</p>
+
+
+<h2>1 · Technology Stack</h2>
+<div class="card-grid">
+
+  <div class="card">
+    <div class="card-title">AI / Orchestration</div>
+    <div class="card-name">IBM watsonx Orchestrate</div>
+    <span class="pill p-blue">react_core agents</span>
+    <span class="pill p-blue">ADK (ibm-watsonx-orchestrate)</span>
+    <span class="pill p-blue">groq/openai/gpt-oss-120b</span>
+    <span class="pill p-blue">MCP streamable_http</span>
+    <span class="pill p-blue">WXOFile (chat upload)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-title">MCP Server Framework</div>
+    <div class="card-name">FastMCP ≥ 4.2</div>
+    <span class="pill p-green">Python 3.12</span>
+    <span class="pill p-green">async / await</span>
+    <span class="pill p-green">Annotated + pydantic Field</span>
+    <span class="pill p-green">Starlette + uvicorn (HTTP)</span>
+    <span class="pill p-green">stdio (local dev)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Database</div>
+    <div class="card-name">PostgreSQL — Neon / ICD</div>
+    <span class="pill p-yellow">pg8000 ≥ 1.31.6</span>
+    <span class="pill p-yellow">DATABASE_URL (SSL)</span>
+    <span class="pill p-yellow">PG_* env vars (dev)</span>
+    <span class="pill p-yellow">wxodb · operational_tbl</span>
+    <span class="pill p-yellow">605 synthetic records</span>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Container &amp; Cloud</div>
+    <div class="card-name">IBM Code Engine</div>
+    <span class="pill p-orange">python:3.12-slim Docker</span>
+    <span class="pill p-orange">IBM Container Registry (ICR)</span>
+    <span class="pill p-orange">podman build / push</span>
+    <span class="pill p-orange">region: ca-tor</span>
+    <span class="pill p-orange">min-scale 1 · 0.25 CPU · 500 MB</span>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Excel Ingestion</div>
+    <div class="card-name">openpyxl ≥ 3.1.5</div>
+    <span class="pill p-purple">WXOFile (chat attach)</span>
+    <span class="pill p-purple">BytesIO in-memory read</span>
+    <span class="pill p-purple">Auto CREATE TABLE</span>
+    <span class="pill p-purple">append / replace modes</span>
+    <span class="pill p-purple">header normalisation</span>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Evaluation Harness</div>
+    <div class="card-name">Arize Phoenix + LLM-as-judge</div>
+    <span class="pill p-red">12-example dataset</span>
+    <span class="pill p-red">keyword correctness judge</span>
+    <span class="pill p-red">scope / hallucination judge</span>
+    <span class="pill p-red">gsa-graj-eval-0 CSV</span>
+    <span class="pill p-red">tags: aggregate · pii_redact · excel_upload …</span>
+  </div>
+
+</div>
+
+
+<div style="margin-top:12px">
+  <h3>Python dependencies (runtime)</h3>
+  <div class="dep-row">
+    <span class="pill p-gray">fastmcp ≥ 4.2.0</span>
+    <span class="pill p-gray">httpx ≥ 0.28.1</span>
+    <span class="pill p-gray">pg8000 ≥ 1.31.6</span>
+    <span class="pill p-gray">openpyxl ≥ 3.1.5</span>
+    <span class="pill p-gray">python-dotenv ≥ 1.2.4</span>
+    <span class="pill p-gray">uvicorn ≥ 0.29.0</span>
+    <span class="pill p-gray">pydantic (via fastmcp)</span>
+    <span class="pill p-gray">starlette (via fastmcp)</span>
+    <span class="pill p-gray">ibm-watsonx-orchestrate (ADK)</span>
+    <span class="pill p-gray">pip ≥ 26.3 (CVE hardened)</span>
+  </div>
+</div>
+
+
+<h2>2 · All Tools (21 total)</h2>
+
+<h3>gsa_graj_tools MCP Toolkit — 9 tools</h3>
+<p style="font-size:11.5px;color:#57606a;margin-bottom:8px">Hosted: <code>https://gsa-graj-tools.…ca-tor.codeengine.appdomain.cloud/mcp</code> · transport: streamable_http</p>
+<table>
+  <thead><tr><th>#</th><th>Tool name</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td class="tool-name">gsa_graj_current_weather</td><td><span class="u">UTIL</span></td><td>Live weather for any city via wttr.in. httpx GET · no auth.</td></tr>
+    <tr><td>2</td><td class="tool-name">gsa_graj_programming_joke</td><td><span class="u">UTIL</span></td><td>Random programming joke via icanhazdadjoke.com. httpx GET.</td></tr>
+    <tr><td>3</td><td class="tool-name">gsa_graj_unit_converter</td><td><span class="u">UTIL</span></td><td>Convert km↔miles, kg↔lbs, °C↔°F, L↔gal, m↔ft, cm↔in.</td></tr>
+    <tr><td>4</td><td class="tool-name">gsa_graj_connect_sl_db</td><td><span class="r">READ</span></td><td>Inspect wxodb schema — tables, column names, data types.</td></tr>
+    <tr><td>5</td><td class="tool-name">gsa_graj_read_from_sl</td><td><span class="r">READ</span></td><td>SELECT * from any table with optional WHERE clause + LIMIT.</td></tr>
+    <tr><td>6</td><td class="tool-name">gsa_graj_write_to_sl</td><td><span class="w">WRITE</span></td><td>INSERT one row (JSON object) into any table.</td></tr>
+    <tr><td>7</td><td class="tool-name">gsa_graj_aggregate_operational_tbl</td><td><span class="r">READ</span></td><td>Monthly SUM/AVG/MIN/MAX/COUNT across all numeric columns in one call.</td></tr>
+    <tr><td>8</td><td class="tool-name">gsa_graj_count_records</td><td><span class="r">READ</span></td><td>Single aggregate (COUNT/SUM/AVG/MIN/MAX/COUNT_DISTINCT) with one-column GROUP BY.</td></tr>
+    <tr><td>9</td><td class="tool-name">gsa_graj_query_operational_tbl</td><td><span class="r">READ</span></td><td>Full analytical query: multi-column GROUP BY, HAVING, date granularity, pagination, top-N.</td></tr>
+  </tbody>
+</table>
+
+<h3 style="margin-top:20px">gsa_graj_viz MCP Toolkit — 6 tools</h3>
+<p style="font-size:11.5px;color:#57606a;margin-bottom:8px">Hosted: <code>https://gsa-graj-viz.…ca-tor.codeengine.appdomain.cloud/mcp</code> · transport: streamable_http · read-only</p>
+<table>
+  <thead><tr><th>#</th><th>Tool name</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td class="tool-name">gsa_graj_viz_inspect_schema</td><td><span class="r">READ</span></td><td>Discover tables, columns, types, row counts, and sample values.</td></tr>
+    <tr><td>2</td><td class="tool-name">gsa_graj_viz_preview_query</td><td><span class="r">READ</span></td><td>Validate SQL via EXPLAIN — no rows touched, confirms query is safe.</td></tr>
+    <tr><td>3</td><td class="tool-name">gsa_graj_viz_run_query</td><td><span class="r">READ</span></td><td>Execute SELECT → returns JSON rows + SQL + markdown chart in one step.</td></tr>
+    <tr><td>4</td><td class="tool-name">gsa_graj_viz_build_chart</td><td><span class="r">READ</span></td><td>Convert rows JSON → interactive markdown chart (bar/line/scatter/histogram/heatmap/table).</td></tr>
+    <tr><td>5</td><td class="tool-name">gsa_graj_viz_export_csv</td><td><span class="r">READ</span></td><td>Convert rows JSON → RFC 4180 CSV for download.</td></tr>
+    <tr><td>6</td><td class="tool-name">gsa_graj_viz_redact_pii</td><td><span class="s">PII</span></td><td>Scan column names + cell values for PII patterns; mask with ***REDACTED***. Called by both agents.</td></tr>
+  </tbody>
+</table>
+
+<h3 style="margin-top:20px">Standalone Python Tools — 6 tools</h3>
+<p style="font-size:11.5px;color:#57606a;margin-bottom:8px">Deployed directly into WXO (not via MCP). Python files in <code>tools/</code>.</p>
+<table>
+  <thead><tr><th>#</th><th>Tool name</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td class="tool-name">gsa_graj_bulk_excel_to_sl</td><td><span class="w">WRITE</span></td><td>Chat-attached .xlsx → PostgreSQL. WXOFile · openpyxl · pg8000. append/replace.</td></tr>
+    <tr><td>2</td><td class="tool-name">gsa_graj_load_excel_to_postgres</td><td><span class="w">WRITE</span></td><td>Chat-attached .xlsx → PostgreSQL. Same flow. Normalises headers to lowercase_underscore.</td></tr>
+    <tr><td>3</td><td class="tool-name">gsa_graj_eval_get_dataset</td><td><span class="e">EVAL</span></td><td>Returns the gsa-graj-eval-0 dataset (12 examples) as JSON. Supports tag_filter.</td></tr>
+    <tr><td>4</td><td class="tool-name">gsa_graj_eval_correctness</td><td><span class="e">EVAL</span></td><td>Keyword judge: all expected keywords must appear in agent response. Score 1.0/0.0.</td></tr>
+    <tr><td>5</td><td class="tool-name">gsa_graj_eval_scope</td><td><span class="e">EVAL</span></td><td>Scope judge: detects hallucination signals vs tool-use evidence. Score 1.0/0.5/0.0.</td></tr>
+  </tbody>
+</table>
+
+
+<h2>3 · Environment Variables</h2>
+<table class="env-table">
+  <thead><tr><th>Variable</th><th>Required</th><th class="desc">Purpose</th></tr></thead>
+  <tbody>
+    <tr><td>DATABASE_URL</td><td>Prod</td><td class="desc">Full Neon / ICD PostgreSQL connection string with sslmode=require</td></tr>
+    <tr><td>PG_HOST / PG_PORT / PG_DB / PG_USER / PG_PASS</td><td>Local dev</td><td class="desc">Individual PG params — used when DATABASE_URL is not set</td></tr>
+    <tr><td>PGSSL</td><td>No</td><td class="desc">Set to <code>true</code> to force SSL with individual PG vars</td></tr>
+    <tr><td>PGSSLROOTCERT</td><td>No</td><td class="desc">Path to CA cert file for sslmode=verify-full (ICD)</td></tr>
+    <tr><td>PORT</td><td>Injected by CE</td><td class="desc">Code Engine / Knative injects this — do NOT set manually in CE</td></tr>
+    <tr><td>VIZ_ROW_LIMIT</td><td>No</td><td class="desc">Max rows per viz query (default 2000)</td></tr>
+    <tr><td>VIZ_QUERY_TIMEOUT_MS</td><td>No</td><td class="desc">Server-side statement timeout in ms (default 30000)</td></tr>
+    <tr><td>VIZ_ALLOWED_SCHEMAS</td><td>No</td><td class="desc">Comma-separated schemas to expose (default: public)</td></tr>
+    <tr><td>USAI_API_KEY / USAI_BASE_URL</td><td>Eval</td><td class="desc">LLM provider credentials for Arize Phoenix eval harness</td></tr>
+    <tr><td>AGENT_MODEL / JUDGE_MODEL</td><td>Eval</td><td class="desc">Model IDs for agent under test and LLM judge (e.g. openai/gpt-4o)</td></tr>
+    <tr><td>PHOENIX_BASE_URL / PHOENIX_API_KEY</td><td>Eval</td><td class="desc">Arize Phoenix instance URL + API key (omit key for local Phoenix)</td></tr>
+  </tbody>
+</table>
+
+
+<h2>4 · IBM Code Engine Deployment (Path A — current)</h2>
+
+<div class="card-grid-2" style="margin-bottom:16px">
+  <div class="card">
+    <div class="card-title">gsa_graj_tools</div>
+    <div class="card-name">Code Engine App</div>
+    <table style="font-size:11.5px"><tbody>
+      <tr><td style="color:#57606a;padding:2px 0 2px 0;width:90px">CE project</td><td><code>gsa-graj-ce</code> (ca-tor)</td></tr>
+      <tr><td style="color:#57606a;padding:2px 0">App name</td><td><code>gsa-graj-tools</code></td></tr>
+      <tr><td style="color:#57606a;padding:2px 0">Image</td><td><code>ca.icr.io/gsa-graj-wxo/gsa-graj-tools:latest</code></td></tr>
+      <tr><td style="color:#57606a;padding:2px 0">Registry secret</td><td><code>icr-secret</code></td></tr>
+      <tr><td style="color:#57606a;padding:2px 0">Resources</td><td>0.25 CPU · 500 MB · min-scale 1</td></tr>
+      <tr><td style="color:#57606a;padding:2px 0">MCP URL</td><td><code>…/mcp</code></td></tr>
+      <tr><td style="color:#57606a;padding:2px 0">Health URL</td><td><code>…/health</code></td></tr>
+    </tbody></table>
+  </div>
+  <div class="card">
+    <div class="card-title">gsa_graj_viz</div>
+    <div class="card-name">Code Engine App</div>
+    <table style="font-size:11.5px"><tbody>
+      <tr><td style="color:#57606a;padding:2px 0 2px 0;width:90px">CE project</td><td><code>gsa-graj-ce</code> (ca-tor)</td></tr>
+      <tr><td style="color:#57606a;padding:2px 0">App name</td><td><code>gsa-graj-viz</code></td></tr>
+      <tr><td style="color:#57606a;padding:2px 0">Image</td><td><code>ca.icr.io/gsa-graj-wxo/gsa-graj-viz:latest</code></td></tr>
+      <tr><td style="color:#57606a;padding:2px 0">Registry secret</td><td><code>icr-secret</code></td></tr>
+      <tr><td style="color:#57606a;padding:2px 0">Resources</td><td>0.25 CPU · 500 MB · min-scale 1</td></tr>
+      <tr><td style="color:#57606a;padding:2px 0">MCP URL</td><td><code>…/mcp</code></td></tr>
+      <tr><td style="color:#57606a;padding:2px 0">Health URL</td><td><code>…/health</code></td></tr>
+    </tbody></table>
+  </div>
+</div>
+
+<h3>Step-by-step deploy (gsa_graj_tools — repeat for gsa_graj_viz)</h3>
+<ol class="steps">
+  <li><strong>Build the container image</strong>
+    <pre>podman build -t ca.icr.io/gsa-graj-wxo/gsa-graj-tools:latest \
+  toolkits/gsa_graj_tools/</pre>
+  </li>
+  <li><strong>Log in to IBM Container Registry and push</strong>
+    <pre>ibmcloud cr login
+podman push ca.icr.io/gsa-graj-wxo/gsa-graj-tools:latest</pre>
+  </li>
+  <li><strong>Select Code Engine project and deploy app</strong>
+    <pre>ibmcloud ce project select --name gsa-graj-ce
+
+# First-time create:
+ibmcloud ce app create \
+  --name gsa-graj-tools \
+  --image ca.icr.io/gsa-graj-wxo/gsa-graj-tools:latest \
+  --registry-secret icr-secret \
+  --port 8000 \
+  --min-scale 1 \
+  --cpu 0.25 \
+  --memory 500M \
+  --secret-ref postgres-secret
+
+# Redeploy existing app:
+ibmcloud ce app update --name gsa-graj-tools \
+  --image ca.icr.io/gsa-graj-wxo/gsa-graj-tools:latest</pre>
+  </li>
+  <li><strong>Smoke-test the live endpoint</strong>
+    <pre>BASE=https://gsa-graj-tools.2h721savdmhn.ca-tor.codeengine.appdomain.cloud
+curl -sf "${BASE}/health"   # → {"status":"ok","service":"gsa_graj_tools"}</pre>
+  </li>
+  <li><strong>Activate the watsonx Orchestrate ADK environment</strong>
+    <pre>.venv/bin/orchestrate env activate gsa-hackathon \
+  --api-key "&lt;YOUR_IBM_IAM_API_KEY&gt;"</pre>
+  </li>
+  <li><strong>Import toolkit into watsonx Orchestrate</strong>
+    <pre># Toolkits are NOT idempotent — remove first if already imported
+.venv/bin/orchestrate toolkits remove --name gsa_graj_tools
+.venv/bin/orchestrate toolkits import \
+  -f toolkits/gsa_graj_tools/toolkit_spec.yaml</pre>
+  </li>
+  <li><strong>Import agents (idempotent — updates in place)</strong>
+    <pre>.venv/bin/orchestrate agents import -f agents/gsa_graj_agent.agent.yaml
+.venv/bin/orchestrate agents import -f agents/gsa_graj_viz_agent.agent.yaml
+.venv/bin/orchestrate agents import -f agents/gsa_graj_eval_agent.agent.yaml</pre>
+  </li>
+  <li><strong>Import standalone Python tools</strong>
+    <pre>.venv/bin/orchestrate tools import -k python \
+  tools/gsa_graj_bulk_excel_to_sl.py \
+  --package-root tools/ \
+  --requirements tools/requirements.txt</pre>
+  </li>
+  <li><strong>Verify everything is registered</strong>
+    <pre>.venv/bin/orchestrate toolkits list
+.venv/bin/orchestrate agents list
+.venv/bin/orchestrate tools list</pre>
+  </li>
+</ol>
+
+<h3 style="margin-top:20px">Key Dockerfile notes</h3>
+<div class="card" style="margin-top:8px">
+  <ul style="list-style:none;font-size:12.5px;line-height:2">
+    <li>🐳 Base image: <code>python:3.12-slim</code> — minimal attack surface</li>
+    <li>🔐 CVE hardening: <code>apt-get upgrade</code> + <code>pip ≥ 26.3</code> applied at build time (8 CVEs patched)</li>
+    <li>⚡ Layer cache: <code>requirements.txt</code> copied and installed before <code>server.py</code></li>
+    <li>🌐 Transport: <code>PORT</code> env var selects HTTP (Code Engine) vs stdio (local dev) — <strong>never set PORT as a CE literal env var</strong></li>
+    <li>🔑 Secrets: PostgreSQL credentials injected via <code>--secret-ref postgres-secret</code> — never baked into image</li>
+  </ul>
+</div>
+
+
+<h2>5 · Sample Demo Questions</h2>
+
+<h3>gsa_graj_agent — Analytics</h3>
+<div class="q-grid">
+  <div class="q-item">
+    <div class="q-label" style="color:#15803d">Schema inspection</div>
+    <div class="q-text">"What tables exist in the database and what columns does operational_tbl have?"</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#15803d">Aggregate + filter</div>
+    <div class="q-text">"Which city has the highest total treatment cost? Show the top 5."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#15803d">Multi-column group by</div>
+    <div class="q-text">"Show record counts grouped by gender and blood group."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#15803d">Date period grouping</div>
+    <div class="q-text">"Show monthly admission counts for 2024 ordered by month."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#15803d">HAVING filter</div>
+    <div class="q-text">"Which wards have more than 100 records and average cost above $5,000?"</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#15803d">Filtered read</div>
+    <div class="q-text">"Show me the first 10 rows from operational_tbl where discharge_status = 'ICU'."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#0369a1">Unit conversion</div>
+    <div class="q-text">"Convert 72 kg to lbs and 36 Celsius to Fahrenheit."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#0369a1">Weather</div>
+    <div class="q-text">"What is the current weather in Toronto?"</div>
+  </div>
+</div>
+
+<h3 style="margin-top:16px">gsa_graj_agent — Excel Upload &amp; PII</h3>
+<div class="q-grid">
+  <div class="q-item">
+    <div class="q-label" style="color:#7c3aed">Excel → new table</div>
+    <div class="q-text">"[attach patients.xlsx] Load this file into a new table called uploaded_patients, replacing any existing data."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#7c3aed">Excel → append</div>
+    <div class="q-text">"[attach new_admissions.xlsx] Append these rows to the existing uploaded_patients table."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#b91c1c">PII redaction</div>
+    <div class="q-text">"Show me the first 10 rows from operational_tbl but redact any personally identifiable information."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#b91c1c">PII + custom columns</div>
+    <div class="q-text">"Read 20 rows from operational_tbl and mask the attending_doctor and patient_id columns as well."</div>
+  </div>
+</div>
+
+<h3 style="margin-top:16px">gsa_graj_viz_agent — Charts</h3>
+<div class="q-grid">
+  <div class="q-item">
+    <div class="q-label" style="color:#6d28d9">Line chart</div>
+    <div class="q-text">"Show monthly admissions trend for 2024 as a line chart."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#6d28d9">Bar chart</div>
+    <div class="q-text">"Compare average treatment cost by city — bar chart, top 10 cities."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#6d28d9">Histogram</div>
+    <div class="q-text">"Show the distribution of length of stay in days as a histogram."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#6d28d9">Heatmap</div>
+    <div class="q-text">"Heatmap of patient counts by ward and discharge status."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#6d28d9">Scatter</div>
+    <div class="q-text">"Is there a correlation between age at admission and treatment cost? Scatter chart."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#6d28d9">CSV export</div>
+    <div class="q-text">"Run the previous query and export the results as CSV."</div>
+  </div>
+</div>
+
+<h3 style="margin-top:16px">gsa_graj_eval_agent — Benchmarking</h3>
+<div class="q-grid">
+  <div class="q-item">
+    <div class="q-label" style="color:#c2410c">Full benchmark</div>
+    <div class="q-text">"Run the full evaluation on gsa_graj_agent and show me a results table."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#c2410c">Tag-filtered run</div>
+    <div class="q-text">"Run only the pii_redact examples and score them."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#c2410c">Single example</div>
+    <div class="q-text">"Evaluate example 11 (Excel upload) and tell me if the agent passed."</div>
+  </div>
+  <div class="q-item">
+    <div class="q-label" style="color:#c2410c">Aggregate examples</div>
+    <div class="q-text">"Run only the aggregate tag examples and show correctness + scope scores."</div>
+  </div>
+</div>
+
+<footer>Made with IBM Bob</footer>
+</body>
+</html>

@@ -1,0 +1,493 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>GSA GRAJ — Story, Demo Flow &amp; Testing Evidence</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;font-size:14px;line-height:1.65;color:#1f2328;background:#fff;max-width:820px;margin:0 auto;padding:32px 24px 48px}
+  h1{font-size:22px;font-weight:700;color:#1f497d;border-bottom:3px solid #2e74b5;padding-bottom:10px;margin-bottom:6px}
+  .subtitle{font-size:13px;color:#57606a;margin-bottom:32px}
+  h2{font-size:16px;font-weight:700;color:#1f497d;margin:36px 0 10px;padding-left:10px;border-left:4px solid #2e74b5}
+  h3{font-size:13px;font-weight:700;color:#2e74b5;margin:18px 0 6px;text-transform:uppercase;letter-spacing:.04em}
+  p{margin-bottom:10px;color:#1f2328}
+  ul,ol{padding-left:20px;margin-bottom:10px}
+  li{margin-bottom:4px}
+  strong{color:#1f2328}
+  code{font-family:"SFMono-Regular",Consolas,monospace;font-size:12px;background:#f6f8fa;border:1px solid #e5e7eb;border-radius:3px;padding:1px 5px;color:#0550ae}
+  pre{background:#f6f8fa;border:1px solid #e5e7eb;border-radius:6px;padding:14px 16px;font-size:12px;overflow-x:auto;margin-bottom:12px;line-height:1.55}
+  .section{background:#fafbfc;border:1px solid #e5e7eb;border-radius:8px;padding:20px 22px;margin-bottom:24px}
+  .story-block{background:#1f497d;color:#fff;border-radius:8px;padding:20px 24px;margin-bottom:24px}
+  .story-block p,.story-block li{color:#deeaf1}
+  .story-block strong{color:#fff}
+  .story-block h3{color:#ffd966;border:none}
+  .pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+  .pain-card{background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:14px 16px}
+  .pain-card .icon{font-size:18px;margin-bottom:6px}
+  .pain-card h4{font-size:13px;font-weight:700;color:#c00000;margin-bottom:4px}
+  .pain-card p{font-size:12px;color:#57606a;margin:0}
+  .sol-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+  .sol-card{border-radius:6px;padding:14px 16px}
+  .sol-card h4{font-size:13px;font-weight:700;margin-bottom:4px;color:#fff}
+  .sol-card p{font-size:12px;color:rgba(255,255,255,.85);margin:0}
+  .c1{background:#1f497d} .c2{background:#2e74b5} .c3{background:#376844} .c4{background:#7f3f98}
+  .demo-step{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+  .step-num{background:#2e74b5;color:#fff;font-weight:700;font-size:13px;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+  .step-body{flex:1}
+  .step-body .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#2e74b5;margin-bottom:3px}
+  .step-body .prompt{background:#fff3cd;border:1px solid #ffc107;border-radius:4px;padding:7px 10px;font-size:12px;font-style:italic;color:#1f2328;margin:5px 0}
+  .step-body .tool{background:#e8f4f8;border:1px solid #2e74b5;border-radius:4px;padding:5px 10px;font-size:11px;color:#0550ae;margin:3px 0;font-family:"SFMono-Regular",Consolas,monospace}
+  .step-body .output{background:#f0fff4;border:1px solid #376844;border-radius:4px;padding:7px 10px;font-size:12px;color:#1f2328;margin:5px 0}
+  table{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0}
+  th{background:#2e74b5;color:#fff;padding:7px 10px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  td{padding:7px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top}
+  tr:nth-child(even) td{background:#f6f8fa}
+  .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  .pass{background:#d4edda;color:#155724}
+  .fail{background:#f8d7da;color:#721c24}
+  .uncertain{background:#fff3cd;color:#856404}
+  .score-row{display:flex;gap:12px;margin:14px 0;flex-wrap:wrap}
+  .score-box{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;flex:1;min-width:140px;text-align:center}
+  .score-box .num{font-size:28px;font-weight:700;color:#376844}
+  .score-box .lbl{font-size:11px;color:#57606a;text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+  .bug-row{background:#fff8f0;border:1px solid #ed7d31;border-radius:6px;padding:12px 16px;margin-bottom:10px}
+  .bug-row .bug-title{font-weight:700;color:#c05000;font-size:13px;margin-bottom:5px}
+  .bug-row .root{color:#57606a;font-size:12px;margin-bottom:4px}
+  .bug-row .fix{color:#155724;font-size:12px}
+  .arch-row{display:flex;gap:0;margin:14px 0;border:1px solid #e5e7eb;border-radius:6px;overflow:hidden}
+  .arch-layer{flex:1;padding:12px 14px;border-right:1px solid #e5e7eb;font-size:12px}
+  .arch-layer:last-child{border-right:none}
+  .arch-layer .lname{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+  .a1{background:#1f497d;color:#fff} .a1 .lname{color:#ffd966}
+  .a2{background:#2e74b5;color:#fff} .a2 .lname{color:#deeaf1}
+  .a3{background:#deeaf1} .a3 .lname{color:#1f497d}
+  .a4{background:#f6f8fa} .a4 .lname{color:#376844}
+  .timeline{position:relative;padding-left:28px;margin:14px 0}
+  .timeline::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:#2e74b5}
+  .tl-item{position:relative;margin-bottom:14px}
+  .tl-item::before{content:'';position:absolute;left:-23px;top:5px;width:10px;height:10px;border-radius:50%;background:#2e74b5;border:2px solid #fff;box-shadow:0 0 0 2px #2e74b5}
+  .tl-item .tl-label{font-size:11px;font-weight:700;color:#2e74b5;text-transform:uppercase;letter-spacing:.04em}
+  .tl-item .tl-body{font-size:12px;color:#57606a}
+  .howit{display:flex;gap:0;margin:14px 0;align-items:stretch}
+  .howit-step{flex:1;padding:12px 14px;text-align:center;border-right:1px solid #e5e7eb;background:#f6f8fa}
+  .howit-step:last-child{border-right:none}
+  .howit-step .arrow{font-size:18px;color:#2e74b5;margin:4px 0}
+  .howit-step .hs-title{font-size:11px;font-weight:700;color:#1f497d;margin-bottom:4px}
+  .howit-step .hs-body{font-size:11px;color:#57606a}
+  .pii-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+  .pii-box{border:1px solid #c00000;border-radius:6px;padding:12px 14px}
+  .pii-box h4{font-size:12px;font-weight:700;color:#c00000;margin-bottom:6px}
+  .pii-box .tags{display:flex;flex-wrap:wrap;gap:4px}
+  .pii-tag{background:#fde8e8;color:#c00000;border:1px solid #f5c6c6;border-radius:3px;font-size:10px;padding:2px 6px;font-weight:600}
+  footer{text-align:center;font-size:11px;color:#57606a;margin-top:40px;padding-top:16px;border-top:1px solid #e5e7eb}
+</style>
+</head>
+<body>
+
+<h1>GSA GRAJ — Story, Demo Flow &amp; Testing Evidence</h1>
+<p class="subtitle">GSA MCP Server &amp; Super-Intelligence Agent Government Hackathon  ·  IBM watsonx Orchestrate  ·  github.com/gayarajk/self-serve-mcp-ibm</p>
+
+
+
+
+<h2>1 · The Story</h2>
+
+<div class="story-block">
+  <h3>The Problem We Solved</h3>
+  <p>In a federal healthcare program office, an analyst gets an email from a program manager at 9 a.m.: <strong>"Can you pull me the total treatment cost by city for 2024, and flag any patients whose data should be redacted before sharing?"</strong></p>
+  <p>Under the old workflow, that request goes into a ticketing queue, waits two days for a data engineer, produces a raw CSV with no PII scrubbing, and arrives the following week — too late for the morning brief.</p>
+  <p>With GSA GRAJ, the program manager types that same question directly into the AI chat, hits send, and has a live-sourced, PII-redacted, ranked result in under 20 seconds. <strong>No ticket. No SQL. No wait.</strong></p>
+</div>
+
+<div class="section">
+  <h3>Four Pain Points We Targeted</h3>
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="icon">🕐</div>
+      <h4>Slow turnaround</h4>
+      <p>Ad-hoc analytics routed through ticketing queues arrive days or weeks late, missing decision windows.</p>
+    </div>
+    <div class="pain-card">
+      <div class="icon">🔓</div>
+      <h4>PII exposure risk</h4>
+      <p>Staff export raw tables and share them without systematic redaction, risking HIPAA violations.</p>
+    </div>
+    <div class="pain-card">
+      <div class="icon">📊</div>
+      <h4>Excel dependency</h4>
+      <p>Operational data lives in spreadsheets that never reach the central database, creating shadow datasets.</p>
+    </div>
+    <div class="pain-card">
+      <div class="icon">📉</div>
+      <h4>No self-serve charts</h4>
+      <p>Tabular SQL outputs require a separate BI tool and additional technical expertise to visualise.</p>
+    </div>
+  </div>
+
+  <h3>How GSA GRAJ Solves Each One</h3>
+  <div class="sol-grid">
+    <div class="sol-card c1">
+      <h4>Instant analytics</h4>
+      <p>Natural-language → live PostgreSQL query → grounded answer in seconds, via IBM watsonx Orchestrate and FastMCP.</p>
+    </div>
+    <div class="sol-card c4">
+      <h4>Automatic PII redaction</h4>
+      <p>gsa_graj_viz_redact_pii scans 20+ column types and cell-level regex patterns before any data is displayed.</p>
+    </div>
+    <div class="sol-card c2">
+      <h4>Chat-attached Excel loader</h4>
+      <p>Attach any .xlsx in the chat window. The agent loads it into PostgreSQL instantly — append or replace mode.</p>
+    </div>
+    <div class="sol-card c3">
+      <h4>Conversational charts</h4>
+      <p>One sentence creates a bar, line, scatter, histogram, heatmap, or table — rendered as markdown and exportable as CSV.</p>
+    </div>
+  </div>
+</div>
+
+
+
+
+<h2>2 · How It Works — Natural Language to Live Data</h2>
+
+<div class="section">
+  <p>Every user message passes through a five-step pipeline. The agent <strong>never answers from memory</strong> — if a tool hasn't been called, no data is shown.</p>
+
+  <div class="howit">
+    <div class="howit-step">
+      <div class="arrow">💬</div>
+      <div class="hs-title">1. User speaks</div>
+      <div class="hs-body">Plain English in the wxO chat window</div>
+    </div>
+    <div class="howit-step">
+      <div class="arrow">🧠</div>
+      <div class="hs-title">2. LLM interprets</div>
+      <div class="hs-body">groq/openai/gpt-oss-120b maps intent to the right tool + parameters</div>
+    </div>
+    <div class="howit-step">
+      <div class="arrow">🔧</div>
+      <div class="hs-title">3. MCP tool fires</div>
+      <div class="hs-body">FastMCP server executes SQL or logic against live PostgreSQL</div>
+    </div>
+    <div class="howit-step">
+      <div class="arrow">🛡️</div>
+      <div class="hs-title">4. PII guard</div>
+      <div class="hs-body">redact_pii runs before any row-level data is returned to the user</div>
+    </div>
+    <div class="howit-step">
+      <div class="arrow">✅</div>
+      <div class="hs-title">5. Grounded reply</div>
+      <div class="hs-body">Tool output + SQL shown verbatim — no hallucination possible</div>
+    </div>
+  </div>
+
+  <h3>System Architecture</h3>
+  <div class="arch-row">
+    <div class="arch-layer a1">
+      <div class="lname">AI Layer</div>
+      IBM watsonx Orchestrate<br />3 react_core agents<br />groq/openai/gpt-oss-120b
+    </div>
+    <div class="arch-layer a2">
+      <div class="lname">MCP Layer</div>
+      FastMCP 4.2+ (Python 3.12)<br />2 toolkits · 15 MCP tools<br />streamable_http transport
+    </div>
+    <div class="arch-layer a3">
+      <div class="lname">Data Layer</div>
+      PostgreSQL — Neon<br />wxodb · operational_tbl<br />~605 synthetic records
+    </div>
+    <div class="arch-layer a4">
+      <div class="lname">Cloud Layer</div>
+      IBM Code Engine (ca-tor)<br />python:3.12-slim Docker<br />min-scale 1 · ICR push
+    </div>
+  </div>
+</div>
+
+
+
+
+<h2>3 · Effective Demo Flow — Step-by-Step Script</h2>
+
+<div class="section">
+  <p>Run these seven demonstrations in order. Each one builds on the previous and shows a distinct capability. Estimated time: <strong>12–15 minutes</strong>.</p>
+
+  
+  <div class="demo-step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <div class="label">Schema Discovery — "What data do we have?"</div>
+      <div class="prompt">"What tables exist in the database and what columns does operational_tbl have?"</div>
+      <div class="tool">→ gsa_graj_connect_sl_db() → returns table list + 15 column definitions</div>
+      <div class="output">✓ Shows full schema: patient_id, name, gender, dob, age_at_admission, city, blood_group, date_admitted, health_issue, ward, attending_doctor, discharge_date, length_of_stay_days, discharge_status, treatment_cost_usd</div>
+      <p style="font-size:12px;color:#57606a;margin-top:4px"><strong>What to highlight:</strong> The agent discovers the live schema in real time — no hardcoded knowledge.</p>
+    </div>
+  </div>
+
+  
+  <div class="demo-step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <div class="label">Aggregation + Ranking — "Top cities by cost"</div>
+      <div class="prompt">"Which five cities have the highest total treatment cost?"</div>
+      <div class="tool">→ gsa_graj_query_operational_tbl(aggregate_function="SUM", aggregate_column="treatment_cost_usd", group_by_columns="city", order_by="result DESC", limit=5)</div>
+      <div class="output">✓ Returns ranked table with city names and dollar totals. SQL shown verbatim.</div>
+      <p style="font-size:12px;color:#57606a;margin-top:4px"><strong>What to highlight:</strong> "Top N" ranking in plain English maps automatically to ORDER BY + LIMIT — no SQL written by user.</p>
+    </div>
+  </div>
+
+  
+  <div class="demo-step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <div class="label">Date Granularity — "Trend across all years"</div>
+      <div class="prompt">"What is the total treatment cost for each admission year across all years?"</div>
+      <div class="tool">→ gsa_graj_query_operational_tbl(aggregate_function="SUM", aggregate_column="treatment_cost_usd", group_by_columns="date_admitted", date_granularity="year", order_by="year_date_admitted ASC")</div>
+      <div class="output">✓ Returns all 5 years (2022–2026) in one call. 2026 partial — data runs to April only.</div>
+      <p style="font-size:12px;color:#57606a;margin-top:4px"><strong>What to highlight:</strong> This was a known regression (agent previously refused with "too many calls"). Fixed with date_granularity="year" parameter — single tool call returns all years at once.</p>
+    </div>
+  </div>
+
+  
+  <div class="demo-step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <div class="label">PII Redaction — "Show data safely"</div>
+      <div class="prompt">"Show me the first 10 rows from operational_tbl but redact any personally identifiable information before displaying."</div>
+      <div class="tool">→ gsa_graj_read_from_sl(table_name="operational_tbl", limit=10)<br />→ gsa_graj_viz_redact_pii(query_result_json=..., scan_values=True)</div>
+      <div class="output">✓ name → ***REDACTED*** · patient_id → ***REDACTED*** · dob → ***REDACTED*** · attending_doctor → ***REDACTED***. Non-PII columns (city, ward, cost) shown as-is.</div>
+      <p style="font-size:12px;color:#57606a;margin-top:4px"><strong>What to highlight:</strong> Two-level detection: column-name matching (20+ PII field names) + cell-value regex (email, phone, SSN, credit card, IP, date patterns). Automatic, no user configuration needed.</p>
+    </div>
+  </div>
+
+  
+  <div class="demo-step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <div class="label">Excel Upload — "Load a spreadsheet"</div>
+      <div class="prompt">[Attach patients.xlsx in chat window] "Load this file into a new table called uploaded_patients, replacing any existing rows."</div>
+      <div class="tool">→ gsa_graj_load_excel_to_postgres(excel_file=WXOFile, table_name="uploaded_patients", if_exists="replace")</div>
+      <div class="output">✓ "Successfully inserted N row(s) into table 'uploaded_patients'. Mode: replace."</div>
+      <p style="font-size:12px;color:#57606a;margin-top:4px"><strong>What to highlight:</strong> File attached in chat — no S3, no API, no staging area. Auto-creates the table with TEXT columns, normalises headers to lowercase_underscore. Append mode also available.</p>
+    </div>
+  </div>
+
+  
+  <div class="demo-step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <div class="label">Visualisation Agent — "Draw a chart"</div>
+      <div class="prompt">"Show monthly admissions trend for 2024 as a line chart." <em>(in gsa_graj_viz_agent)</em></div>
+      <div class="tool">→ gsa_graj_viz_inspect_schema()<br />→ gsa_graj_viz_preview_query(sql="SELECT DATE_TRUNC('month', date_admitted)...")<br />→ gsa_graj_viz_run_query(sql=..., chart_type="line", x_column="month", y_column="count")</div>
+      <div class="output">✓ Markdown line chart rendered. SQL block shown. Row count disclosed. CSV export offered.</div>
+      <p style="font-size:12px;color:#57606a;margin-top:4px"><strong>What to highlight:</strong> Schema → validate → execute → render in one conversational turn. Chart type inferred from "trend" → line. User never sees SQL unless they want to.</p>
+    </div>
+  </div>
+
+  
+  <div class="demo-step">
+    <div class="step-num">7</div>
+    <div class="step-body">
+      <div class="label">Evaluation Agent — "Prove it works"</div>
+      <div class="prompt">"Run the aggregate tag examples and show me correctness and scope scores."</div>
+      <div class="tool">→ gsa_graj_eval_get_dataset(tag_filter="aggregate") → 8 examples<br />→ gsa_graj_agent (collaborator) for each question<br />→ gsa_graj_eval_correctness + gsa_graj_eval_scope per response</div>
+      <div class="output">✓ Results table with CORRECT / IN-SCOPE scores. Summary: correctness %, scope %.</div>
+      <p style="font-size:12px;color:#57606a;margin-top:4px"><strong>What to highlight:</strong> The system benchmarks itself — the eval agent calls the agent under test, scores responses with two independent judges, and produces a reproducible results table.</p>
+    </div>
+  </div>
+</div>
+
+
+
+
+<h2>4 · Evidence of Testing</h2>
+
+<div class="section">
+  <h3>Evaluation Framework Design</h3>
+  <p>Testing uses a <strong>two-judge LLM-as-judge pattern</strong> against a fixed golden dataset. The two judges are independent and score orthogonal dimensions:</p>
+  <div class="score-row">
+    <div class="score-box">
+      <div class="num" style="color:#1f497d">Judge 1</div>
+      <div class="lbl">Correctness</div>
+      <div style="font-size:11px;color:#57606a;margin-top:6px">AND keyword match — all expected keywords must appear in response. Score: 1.0 / 0.0</div>
+    </div>
+    <div class="score-box">
+      <div class="num" style="color:#2e74b5">Judge 2</div>
+      <div class="lbl">Scope / Anti-hallucination</div>
+      <div style="font-size:11px;color:#57606a;margin-top:6px">Detects fabrication signals vs. tool-use evidence. Score: 1.0 / 0.5 / 0.0</div>
+    </div>
+    <div class="score-box">
+      <div class="num">13</div>
+      <div class="lbl">Golden examples</div>
+      <div style="font-size:11px;color:#57606a;margin-top:6px">gsa-graj-eval-0.csv — stable, read-only, multi-tool-call questions</div>
+    </div>
+  </div>
+
+  <h3>Golden Dataset — gsa-graj-eval-0 (13 examples)</h3>
+  <table>
+    <tr><th>ID</th><th>Tags</th><th>Question (summary)</th><th>Expected Keywords</th></tr>
+    <tr><td>1</td><td>schema, count</td><td>Column names + distinct city count</td><td><code>city, COUNT_DISTINCT</code></td></tr>
+    <tr><td>2</td><td>aggregate, filter</td><td>Highest total treatment cost by city</td><td><code>treatment_cost_usd</code></td></tr>
+    <tr><td>3</td><td>aggregate, filter</td><td>Avg age for Discharged patients</td><td><code>avg, age_at_admission</code></td></tr>
+    <tr><td>4</td><td>schema, read</td><td>Schema + 3 rows where status=ICU</td><td><code>discharge_status, ICU</code></td></tr>
+    <tr><td>5</td><td>unit_conversion</td><td>72 kg → lbs, 36°C → °F</td><td><code>158.7326, 96.8</code></td></tr>
+    <tr><td>6</td><td>aggregate</td><td>Ward with highest avg length of stay</td><td><code>ward, avg, length_of_stay</code></td></tr>
+    <tr><td>7</td><td>aggregate</td><td>Min and max treatment costs</td><td><code>min, max, treatment_cost_usd</code></td></tr>
+    <tr><td>8</td><td>aggregate</td><td>Distinct discharge statuses + counts</td><td><code>Discharged, count</code></td></tr>
+    <tr><td>9</td><td>schema, aggregate, filter</td><td>Schema + total cost for Toronto</td><td><code>Toronto, treatment_cost_usd</code></td></tr>
+    <tr><td>10</td><td>aggregate</td><td>Avg LOS + count for January 2024</td><td><code>avg, length_of_stay, january, 2024</code></td></tr>
+    <tr><td>11</td><td>excel_upload, postgres</td><td>Upload Excel → new table, replace mode</td><td><code>gsa_graj_load_excel_to_postgres, uploaded_patients, replace</code></td></tr>
+    <tr><td>12</td><td>pii_redact, read</td><td>Read rows with all PII masked</td><td><code>gsa_graj_viz_redact_pii, REDACTED, name, patient_id</code></td></tr>
+    <tr><td>13</td><td>aggregate, date_granularity</td><td>Total cost by admission year (all years)</td><td><code>2022, 2023, 2024, 2025, 2026, treatment_cost_usd</code></td></tr>
+  </table>
+
+  <h3>Verified Live Output — Example 13 (Regression Test)</h3>
+  <p>This example was specifically added to prevent recurrence of a known bug where the agent refused yearly grouping with "would require too many calls". The fix was verified live:</p>
+  <table>
+    <tr><th>Admission Year</th><th>Total Treatment Cost (USD)</th><th>Status</th></tr>
+    <tr><td>2022</td><td>$2,987,147.37</td><td><span class="badge pass">PASS</span></td></tr>
+    <tr><td>2023</td><td>$2,765,052.81</td><td><span class="badge pass">PASS</span></td></tr>
+    <tr><td>2024</td><td>$2,877,242.99</td><td><span class="badge pass">PASS</span></td></tr>
+    <tr><td>2025</td><td>$2,991,483.03</td><td><span class="badge pass">PASS</span></td></tr>
+    <tr><td>2026 (partial — data to April)</td><td>$1,859,969.44</td><td><span class="badge pass">PASS</span></td></tr>
+  </table>
+  <p style="font-size:12px;color:#57606a">Single <code>gsa_graj_query_operational_tbl</code> call with <code>date_granularity="year"</code> — no looping, all years returned at once.</p>
+</div>
+
+
+
+
+<h2>5 · Bugs Found During Testing &amp; How They Were Fixed</h2>
+
+<div class="section">
+  <p>Testing is not just about passing scores — it's about discovering failure modes and proving they were fixed. Two significant bugs were caught and resolved:</p>
+
+  <div class="bug-row">
+    <div class="bug-title">Bug 1 — Agent refused yearly aggregation: "would require too many calls"</div>
+    <div class="root">Root cause: (1) Duplicate tool number "── 6." in agent instructions confused the LLM's routing logic — it couldn't reliably distinguish the Excel tool from the analytics tool. (2) No example of <code>date_granularity="year"</code> existed in the tool-call mapping section. (3) No explicit rule banning the refusal pattern.</div>
+    <div class="fix">Fix applied: Renumbered tools (Excel=6, analytics=7). Added a yearly aggregation example to the MAPPING section. Added two ABSOLUTE RULES at the top of instructions banning any refusal of date-grouping requests and the "too many calls" excuse. Verified with Example 13 live run above.</div>
+  </div>
+
+  <div class="bug-row">
+    <div class="bug-title">Bug 2 — PII redaction tool unavailable after viz toolkit rebuild</div>
+    <div class="root">Root cause: <code>gsa_graj_viz_redact_pii</code> was added to <code>toolkits/gsa_graj_viz/server.py</code> but the live Code Engine container was not updated. The toolkit registered in WXO still pointed to the old image, which did not expose the new tool.</div>
+    <div class="fix">Fix applied: Rebuilt the gsa_graj_viz Docker image, pushed to ICR (<code>ca.icr.io/gsa-graj-wxo/gsa-graj-viz:latest</code>), ran <code>ibmcloud ce app update</code>, then removed and re-imported the toolkit into watsonx Orchestrate. Verified via <code>orchestrate toolkits list</code> and a live PII redaction test.</div>
+  </div>
+</div>
+
+
+
+
+<h2>6 · PII Redaction — Detailed Evidence</h2>
+
+<div class="section">
+  <p>PII protection is a first-class capability, not an afterthought. The <code>gsa_graj_viz_redact_pii</code> tool is called by <strong>both agents</strong> before displaying any row-level data, and it operates at two independent detection levels.</p>
+
+  <div class="pii-grid">
+    <div class="pii-box">
+      <h4>Level 1 — Column Name Matching (20+ patterns)</h4>
+      <div class="tags">
+        <span class="pii-tag">name</span><span class="pii-tag">email</span><span class="pii-tag">phone</span>
+        <span class="pii-tag">dob</span><span class="pii-tag">ssn</span><span class="pii-tag">patient_id</span>
+        <span class="pii-tag">address</span><span class="pii-tag">gender</span><span class="pii-tag">attending_doctor</span>
+        <span class="pii-tag">salary</span><span class="pii-tag">national_id</span><span class="pii-tag">iban</span>
+        <span class="pii-tag">passport</span><span class="pii-tag">license</span><span class="pii-tag">race</span>
+        <span class="pii-tag">ethnicity</span><span class="pii-tag">biometric</span><span class="pii-tag">ip_address</span>
+        <span class="pii-tag">mac_address</span>
+      </div>
+    </div>
+    <div class="pii-box">
+      <h4>Level 2 — Cell Value Regex Scanning</h4>
+      <div class="tags">
+        <span class="pii-tag">email addresses</span><span class="pii-tag">phone numbers</span>
+        <span class="pii-tag">SSN (XXX-XX-XXXX)</span><span class="pii-tag">credit cards</span>
+        <span class="pii-tag">IPv4 addresses</span><span class="pii-tag">ISO dates (DOB)</span>
+        <span class="pii-tag">UK NHS numbers</span><span class="pii-tag">UK postcodes</span>
+        <span class="pii-tag">US ZIP codes</span>
+      </div>
+    </div>
+  </div>
+
+  <p>Masked value: <code>***REDACTED***</code>  |  <code>scan_values=True</code> (default) enables Level 2  |  <code>sensitive_columns</code> param forces extra columns beyond defaults.</p>
+
+  <h3>What a redacted output looks like</h3>
+  <pre>Before redaction:
+  {"patient_id": "P-10042", "name": "Jane Smith", "dob": "1985-03-14",
+   "attending_doctor": "Dr. A. Chen", "city": "Toronto", "treatment_cost_usd": 4820.50}
+
+After gsa_graj_viz_redact_pii:
+  {"patient_id": "***REDACTED***", "name": "***REDACTED***", "dob": "***REDACTED***",
+   "attending_doctor": "***REDACTED***", "city": "Toronto", "treatment_cost_usd": 4820.50}</pre>
+  <p style="font-size:12px;color:#57606a">Non-PII columns (city, treatment_cost_usd) pass through unchanged. PII detection is automatic — users do not need to specify which columns to mask.</p>
+</div>
+
+
+
+
+<h2>7 · Hackathon Deliverables — Status</h2>
+
+<div class="section">
+  <table>
+    <tr><th>Deliverable</th><th>Status</th><th>Location / Evidence</th></tr>
+    <tr><td><strong>Working MCP server</strong></td><td><span class="badge pass">LIVE</span></td><td>gsa_graj_tools + gsa_graj_viz on IBM Code Engine (ca-tor), /health + /mcp verified</td></tr>
+    <tr><td><strong>SI Agent integrated with MCP</strong></td><td><span class="badge pass">LIVE</span></td><td>gsa_graj_agent + gsa_graj_viz_agent in IBM watsonx Orchestrate, confirmed via CLI list</td></tr>
+    <tr><td><strong>Source code on GitHub</strong></td><td><span class="badge pass">PUSHED</span></td><td>github.com/gayarajk/self-serve-mcp-ibm — 74 files, all 4 deployment paths</td></tr>
+    <tr><td><strong>README with setup instructions</strong></td><td><span class="badge pass">COMPLETE</span></td><td>deploy/ibm/README.md — paths A/B/C/D with full runbooks, troubleshooting, env vars</td></tr>
+    <tr><td><strong>Evaluation documentation</strong></td><td><span class="badge pass">COMPLETE</span></td><td>eval/GSA_GRAJ_Evaluation_Documentation.docx — 10 sections, 13 tables, 24 headings</td></tr>
+    <tr><td><strong>Presentation slide deck</strong></td><td><span class="badge pass">COMPLETE</span></td><td>eval/GSA_GRAJ_Presentation.pptx — 12 slides, widescreen, colour-coded</td></tr>
+    <tr><td><strong>Golden eval dataset</strong></td><td><span class="badge pass">COMPLETE</span></td><td>eval/phoenix/datasets/gsa-graj-eval-0/examples/gsa-graj-eval-0.csv — 13 examples</td></tr>
+    <tr><td><strong>LLM-as-judge harness</strong></td><td><span class="badge pass">COMPLETE</span></td><td>gsa_graj_eval_correctness + gsa_graj_eval_scope + gsa_graj_eval_agent (live in WXO)</td></tr>
+  </table>
+</div>
+
+
+
+
+<h2>8 · Development Timeline</h2>
+
+<div class="section">
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-label">Foundation</div>
+      <div class="tl-body">PostgreSQL schema, operational_tbl synthetic data, db_config.py, basic MCP server skeleton with gsa_graj_tools toolkit.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">Analytics tools</div>
+      <div class="tl-body">gsa_graj_read_from_sl, gsa_graj_write_to_sl, gsa_graj_connect_sl_db, gsa_graj_aggregate_operational_tbl, gsa_graj_count_records, gsa_graj_query_operational_tbl — deployed to Code Engine.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">Visualisation toolkit</div>
+      <div class="tl-body">gsa_graj_viz FastMCP server built and deployed: inspect_schema, preview_query, run_query, build_chart, export_csv. gsa_graj_viz_agent created.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">Excel ingestion</div>
+      <div class="tl-body">gsa_graj_load_excel_to_postgres built with WXOFile (chat-attach pattern), openpyxl in-memory read, auto CREATE TABLE, append/replace modes.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">PII redaction</div>
+      <div class="tl-body">gsa_graj_viz_redact_pii added to viz toolkit. Two-level detection (column names + cell-value regex). Mandatory pre-display step in both agents. Image rebuilt and redeployed.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">Evaluation harness</div>
+      <div class="tl-body">Golden dataset (13 examples), correctness judge, scope/hallucination judge, eval agent. Example 13 (yearly granularity) added as regression test.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">Bug fixes + hardening</div>
+      <div class="tl-body">Fixed duplicate tool-number bug. Added ABSOLUTE RULES to agent instructions. Added date_granularity=year mapping example. Verified Example 13 live run. Added yearly cost breakdown rule.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">Deployment infrastructure</div>
+      <div class="tl-body">4 deployment paths documented (ICR prebuilt, GHCR prebuilt, stdio local, CE build-from-git). Git repo initialised, all 74 files pushed to GitHub.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-label">Deliverables</div>
+      <div class="tl-body">Evaluation DOCX, 12-slide PPTX, this story one-pager, agent description enriched with NLP narrative. All committed and pushed.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Made with IBM Bob  ·  GSA GRAJ  ·  github.com/gayarajk/self-serve-mcp-ibm</p>
+</footer>
+
+</body>
+</html>

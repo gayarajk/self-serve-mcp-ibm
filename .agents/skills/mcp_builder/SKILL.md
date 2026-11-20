@@ -40,7 +40,7 @@ wxo-agentic-workflow/
 
 ### 1.1  Understand the existing pattern
 
-Every tool in [`toolkits/gsa_graj_tools/server.py`](toolkits/gsa_graj_tools/server.py)
+Every tool in [`toolkits/gsa_graj_tools/server.py`](https://github.com/gayarajk/self-serve-mcp-ibm/blob/main/toolkits/gsa_graj_tools/server.py)
 follows this exact shape:
 
 ```python
@@ -82,7 +82,7 @@ from db_config import get_conn as _get_conn, PG_DB as _PG_DB, PG_HOST as _PG_HOS
 ```
 
 If a new tool needs an additional library, add it to
-[`toolkits/gsa_graj_tools/requirements.txt`](toolkits/gsa_graj_tools/requirements.txt).
+[`toolkits/gsa_graj_tools/requirements.txt`](https://github.com/gayarajk/self-serve-mcp-ibm/blob/main/toolkits/gsa_graj_tools/requirements.txt).
 
 ### 1.3  Database access pattern (copy-paste template)
 
@@ -147,7 +147,7 @@ After adding the function, also add its name to the `tools` list inside
 
 ## Phase 2 — Wire the Tool into the Agent
 
-Open [`agents/gsa_graj_agent.agent.yaml`](agents/gsa_graj_agent.agent.yaml).
+Open [`agents/gsa_graj_agent.agent.yaml`](https://github.com/gayarajk/self-serve-mcp-ibm/blob/main/agents/gsa_graj_agent.agent.yaml).
 
 ### 2.1  Add to the tools list
 
@@ -234,7 +234,7 @@ export DATABASE_URL="postgresql://<user>:<pass>@<host>:5432/neondb?sslmode=verif
 ## Phase 4 — Deploy to IBM Code Engine
 
 The server runs as a container on Code Engine behind the URL registered in
-[`toolkit_spec.yaml`](toolkits/gsa_graj_tools/toolkit_spec.yaml):
+[`toolkit_spec.yaml`](https://github.com/gayarajk/self-serve-mcp-ibm/blob/main/toolkits/gsa_graj_tools/toolkit_spec.yaml):
 
 ```
 https://gsa-graj-tools.2h721savdmhn.ca-tor.codeengine.appdomain.cloud/mcp
@@ -250,7 +250,7 @@ docker build -t "$IMAGE" toolkits/gsa_graj_tools/
 docker push "$IMAGE"
 ```
 
-The [`Dockerfile`](toolkits/gsa_graj_tools/Dockerfile) already sets:
+The [`Dockerfile`](https://github.com/gayarajk/self-serve-mcp-ibm/blob/main/toolkits/gsa_graj_tools/Dockerfile) already sets:
 ```dockerfile
 ENV PORT=8000   # for local docker run only; Code Engine overrides this
 EXPOSE 8000
@@ -259,7 +259,7 @@ CMD ["python", "server.py"]
 
 > **Note:** `PORT` is a Knative-reserved env var — Code Engine injects it
 > automatically. Do not pass `--env PORT=…` to `ce app create/update`.
-> See [`deploy/ibm/README.md`](../../deploy/ibm/README.md) for the full runbook.
+> See [`deploy/ibm/README.md`](https://github.com/gayarajk/self-serve-mcp-ibm/blob/main/deploy/ibm/README.md) for the full runbook.
 
 ### 4.2  Update the Code Engine application
 
@@ -311,7 +311,7 @@ cd /home/itzuser/wxo-agentic-workflow
 .venv/bin/orchestrate toolkits import -f toolkits/gsa_graj_tools/toolkit_spec.yaml
 ```
 
-The [`toolkit_spec.yaml`](toolkits/gsa_graj_tools/toolkit_spec.yaml) pulls the
+The [`toolkit_spec.yaml`](https://github.com/gayarajk/self-serve-mcp-ibm/blob/main/toolkits/gsa_graj_tools/toolkit_spec.yaml) pulls the
 tool list directly from the live Code Engine endpoint:
 
 ```yaml
